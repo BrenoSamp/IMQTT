@@ -23,14 +23,6 @@ def connect_mqtt() -> mqtt_client:
     client.connect(broker, port)
     return client
 
-
-def subscribe(client: mqtt_client):
-    def on_message(client, userdata, msg):
-        print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
-
-    client.subscribe(topic)
-    client.on_message = on_message
-
 def publish(client):
     msg_count = 0
     while True:
