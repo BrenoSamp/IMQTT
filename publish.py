@@ -23,23 +23,35 @@ def connect_mqtt() -> mqtt_client:
     client.connect(broker, port)
     return client
 
-def publish(client):
-    msg_count = 0
+def publish(client, msg):
     while True:
         time.sleep(1)
-        msg = f"messages: {msg_count}"
         result = client.publish(topic, msg)
         status = result[0]
         if status == 0:
-            print(f"Send `{msg}` to topic `{topic}`")
+            print(f"Send message to topic `{topic}` sucessfully ")
         else:
             print(f"Failed to send message to topic {topic}")
-        msg_count += 1
 
-def run():
-    client = connect_mqtt()
-    publish(client)
+
 
 
 if __name__ == '__main__':
-    run()
+    client = connect_mqtt()
+    tipo_mensagem = input("Digite o tipo da sua mensagem [calculo, arquivo, texto]: ")
+    if tipo_mensagem == 'calculo':
+        valor1 = input('Digite o primeiro valor: ')
+        valor2 = input('Digite o segundo valor: ')
+        operador = input('Digite o operador [*, /, +, -]: ')
+        payload = {
+            "valor_1": valor1,
+            "valor_2": valor2,
+            "operador": operador,
+        }
+        msg = {
+            "tipo_mensagem": tipo_mensagem,
+            "payload": payload
+        }
+        publish(client, str(msg))
+
+
