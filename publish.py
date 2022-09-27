@@ -46,8 +46,7 @@ def publish(client):
 
 def run():
     client = connect_mqtt()
-    subscribe(client)
-    client.loop_forever()
+    publish(client)
 
 
 if __name__ == '__main__':
