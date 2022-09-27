@@ -24,14 +24,12 @@ def connect_mqtt() -> mqtt_client:
     return client
 
 def publish(client, msg):
-    while True:
-        time.sleep(1)
-        result = client.publish(topic, msg)
-        status = result[0]
-        if status == 0:
-            print(f"Send message to topic `{topic}` sucessfully ")
-        else:
-            print(f"Failed to send message to topic {topic}")
+    result = client.publish(topic, msg)
+    status = result[0]
+    if status == 0:
+        print(f"Send message to topic `{topic}` sucessfully ")
+    else:
+        print(f"Failed to send message to topic {topic}")
 
 
 

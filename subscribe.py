@@ -26,22 +26,23 @@ def connect_mqtt() -> mqtt_client:
 
 def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
-        decodedMessage = eval(msg.payload.decode())
-        payload = decodedMessage['payload']
-        if decodedMessage['tipo_mensagem'] == 'calculo':
-            valor1 = payload['valor_1']
-            valor2 = payload['valor_2']
-            operador = payload['operador']
-            if operador == '+':
-                resultado = valor1 + valor2
-            elif operador == '*':
-                resultado = valor1 * valor2
-            elif operador == '/':
-                resultado = valor1 / valor2
-            elif operador == '-':
-                resultado = valor1 - valor2
-
-        print(f"{valor1} {operador} {valor2} = {resultado}")
+        decodedMessage = msg.payload.decode()
+        if decodedMessage != 'hi deva':
+            decodedMessage = eval(decodedMessage)
+            payload = decodedMessage['payload']
+            if decodedMessage['tipo_mensagem'] == 'calculo':
+                valor1 = payload['valor_1']
+                valor2 = payload['valor_2']
+                operador = payload['operador']
+                if operador == '+':
+                    resultado = float(valor1) + float(valor2)
+                elif operador == '*':
+                    resultado = float(valor1) * float(valor2)
+                elif operador == '/':
+                    resultado = float(valor1) / float(valor2)
+                elif operador == '-':
+                    resultado = float(valor1) - float(valor2)
+            print(f"{valor1} {operador} {valor2} = {resultado}")
 
 
     client.subscribe(topic)
